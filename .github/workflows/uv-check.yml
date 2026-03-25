@@ -1,0 +1,29 @@
+name: UV Index Check
+
+on:
+  schedule:
+    # Runs daily at 2pm UTC — adjust to your morning time
+    - cron: '0 14 * * *'
+  workflow_dispatch: # Allow manual trigger for testing
+
+jobs:
+  check-uv:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Check UV index and notify
+        env:
+          OPENUV_API_KEY: ${{ secrets.OPENUV_API_KEY }}
+          LATITUDE: ${{ secrets.LATITUDE }}
+          LONGITUDE: ${{ secrets.LONGITUDE }}
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+          UV_THRESHOLD: ${{ secrets.UV_THRESHOLD }}
+        run: python uv_alert.py

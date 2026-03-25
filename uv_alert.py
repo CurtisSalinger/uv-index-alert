@@ -1,9 +1,8 @@
 #!/usr/bin/env python3
-"""UV Index Alert - AWS Lambda function that checks UV index and texts you."""
+"""UV Index Alert - Checks UV index and sends a push notification via ntfy.sh."""
 
 import os
 import requests
-from twilio.rest import Client
 
 
 def get_uv_index(api_key, lat, lng):
@@ -16,39 +15,37 @@ def get_uv_index(api_key, lat, lng):
     return resp.json()["result"]["uv"]
 
 
-def send_sms(account_sid, auth_token, from_number, to_number, message):
-    """Send an SMS via Twilio."""
-    client = Client(account_sid, auth_token)
-    client.messages.create(body=message, from_=from_number, to=to_number)
+def send_notification(topic, title, message):
+    """Send a push notification via ntfy.sh (free, no account needed)."""
+    requests.post(
+        f"https://ntfy.sh/{topic}",
+        data=message,
+        headers={"Title": title, "Priority": "high", "Tags": "sun,warning"},
+        timeout=10,
+    )
 
 
-def handler(event, context):
-    """AWS Lambda entry point."""
-    openuv_api_key = os.environ["OPENUV_API_KEY"]
+def main():
+    api_key = os.environ["OPENUV_API_KEY"]
     lat = os.environ["LATITUDE"]
     lng = os.environ["LONGITUDE"]
-    twilio_sid = os.environ["TWILIO_ACCOUNT_SID"]
-    twilio_token = os.environ["TWILIO_AUTH_TOKEN"]
-    twilio_from = os.environ["TWILIO_FROM_NUMBER"]
-    to_number = os.environ["TO_NUMBER"]
+    ntfy_topic = os.environ["NTFY_TOPIC"]
     threshold = float(os.environ.get("UV_THRESHOLD", "3"))
 
-    uv = get_uv_index(openuv_api_key, lat, lng)
+    uv = get_uv_index(api_key, lat, lng)
     print(f"Current UV index: {uv}")
 
     if uv > threshold:
         message = (
-            f"UV Alert: The current UV index is {uv:.1f}, "
-            f"which is above your threshold of {threshold:.0f}. "
+            f"The current UV index is {uv:.1f} "
+            f"(above your threshold of {threshold:.0f}). "
             "Don't forget sunscreen!"
         )
-        send_sms(twilio_sid, twilio_token, twilio_from, to_number, message)
+        send_notification(ntfy_topic, "UV Index Alert", message)
         print(f"Alert sent: {message}")
-        return {"statusCode": 200, "body": f"Alert sent. UV index: {uv:.1f}"}
-
-    print(f"UV index {uv:.1f} is at or below threshold ({threshold:.0f}). No alert needed.")
-    return {"statusCode": 200, "body": f"No alert. UV index: {uv:.1f}"}
+    else:
+        print(f"UV index {uv:.1f} is at or below threshold ({threshold:.0f}). No alert needed.")
 
 
 if __name__ == "__main__":
-    handler(None, None)
+    main()

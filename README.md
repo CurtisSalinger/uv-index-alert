@@ -1,58 +1,35 @@
 # UV Index Alert
 
-A serverless function that checks the current UV index for your location and texts you a reminder when it's above 3. Runs on AWS Lambda with a daily CloudWatch schedule.
+A free, serverless UV index checker that runs on GitHub Actions and sends push notifications to your phone via [ntfy.sh](https://ntfy.sh).
 
-## Setup
+## Setup (5 minutes)
 
-1. **Get API keys:**
-   - [OpenUV](https://www.openuv.io/) — free tier gives 50 requests/day
-   - [Twilio](https://www.twilio.com/) — for sending SMS
+### 1. Get a free OpenUV API key
+Sign up at [openuv.io](https://www.openuv.io/) — free tier gives 50 requests/day.
 
-2. **Install the AWS SAM CLI:**
-   ```bash
-   pip install aws-sam-cli
-   ```
+### 2. Install ntfy on your phone
+- **iPhone:** [App Store](https://apps.apple.com/us/app/ntfy/id1625396347)
+- **Android:** [Play Store](https://play.google.com/store/apps/details?id=io.heckel.ntfy)
 
-3. **Build and deploy:**
-   ```bash
-   sam build
-   sam deploy --guided
-   ```
-   SAM will prompt you for your API keys, phone numbers, and coordinates during the guided deploy.
+Open the app and subscribe to a topic name you make up (e.g. `my-uv-alerts-xyz`). Pick something unique so only you get the notifications.
 
-4. **Test it:**
-   ```bash
-   sam remote invoke UvAlertFunction --stack-name uv-index-alert
-   ```
+### 3. Add secrets to this repo
+Go to **Settings > Secrets and variables > Actions** and add:
 
-## Run Locally
-
-```bash
-pip install -r requirements.txt
-# Set env vars (or source .env)
-python uv_alert.py
-```
-
-## Architecture
-
-- **AWS Lambda** — runs the check (Python 3.12, 128 MB, ~30s timeout)
-- **CloudWatch Events** — triggers the Lambda daily at 2pm UTC (adjust the cron in `template.yaml`)
-- **OpenUV API** — provides the UV index
-- **Twilio** — sends the SMS alert
-
-## Configuration
-
-All parameters are set during `sam deploy --guided` and stored as CloudFormation parameters:
-
-| Parameter | Description |
+| Secret | Description |
 |---|---|
-| `OpenUvApiKey` | Your OpenUV API key |
-| `Latitude` | Your latitude |
-| `Longitude` | Your longitude |
-| `TwilioAccountSid` | Twilio account SID |
-| `TwilioAuthToken` | Twilio auth token |
-| `TwilioFromNumber` | Twilio phone number (sender) |
-| `ToNumber` | Your phone number (receiver) |
-| `UvThreshold` | UV index threshold (default: 3) |
+| `OPENUV_API_KEY` | Your OpenUV API key |
+| `LATITUDE` | Your latitude (e.g. `37.7749`) |
+| `LONGITUDE` | Your longitude (e.g. `-122.4194`) |
+| `NTFY_TOPIC` | Your ntfy topic name (e.g. `my-uv-alerts-xyz`) |
+| `UV_THRESHOLD` | *(optional)* UV threshold, defaults to `3` |
 
-To change the schedule, edit the `Schedule` in `template.yaml` and redeploy.
+### 4. Test it
+Go to **Actions > UV Index Check > Run workflow** to trigger a manual run.
+
+## How It Works
+
+- GitHub Actions runs the check daily at 2pm UTC (edit the cron in `.github/workflows/uv-check.yml`)
+- Fetches the UV index for your coordinates from the OpenUV API
+- If UV > 3, sends a push notification to your phone via ntfy.sh
+- Completely free: GitHub Actions free tier + OpenUV free tier + ntfy.sh is free
