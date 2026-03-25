@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
-"""UV Index Alert - Checks UV index and sends a text when it's above a threshold."""
+"""UV Index Alert - AWS Lambda function that checks UV index and texts you."""
 
 import os
-import sys
 import requests
 from twilio.rest import Client
 
@@ -23,8 +22,8 @@ def send_sms(account_sid, auth_token, from_number, to_number, message):
     client.messages.create(body=message, from_=from_number, to=to_number)
 
 
-def main():
-    # Required environment variables
+def handler(event, context):
+    """AWS Lambda entry point."""
     openuv_api_key = os.environ["OPENUV_API_KEY"]
     lat = os.environ["LATITUDE"]
     lng = os.environ["LONGITUDE"]
@@ -45,9 +44,11 @@ def main():
         )
         send_sms(twilio_sid, twilio_token, twilio_from, to_number, message)
         print(f"Alert sent: {message}")
-    else:
-        print(f"UV index {uv:.1f} is at or below threshold ({threshold:.0f}). No alert needed.")
+        return {"statusCode": 200, "body": f"Alert sent. UV index: {uv:.1f}"}
+
+    print(f"UV index {uv:.1f} is at or below threshold ({threshold:.0f}). No alert needed.")
+    return {"statusCode": 200, "body": f"No alert. UV index: {uv:.1f}"}
 
 
 if __name__ == "__main__":
-    main()
+    handler(None, None)

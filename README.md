@@ -1,6 +1,6 @@
 # UV Index Alert
 
-A simple script that checks the current UV index for your location and texts you a reminder when it's above 3 (or your custom threshold).
+A serverless function that checks the current UV index for your location and texts you a reminder when it's above 3. Runs on AWS Lambda with a daily CloudWatch schedule.
 
 ## Setup
 
@@ -8,39 +8,51 @@ A simple script that checks the current UV index for your location and texts you
    - [OpenUV](https://www.openuv.io/) — free tier gives 50 requests/day
    - [Twilio](https://www.twilio.com/) — for sending SMS
 
-2. **Install dependencies:**
+2. **Install the AWS SAM CLI:**
    ```bash
-   pip install -r requirements.txt
+   pip install aws-sam-cli
    ```
 
-3. **Configure environment variables:**
+3. **Build and deploy:**
    ```bash
-   cp .env.example .env
-   # Edit .env with your API keys, phone number, and coordinates
+   sam build
+   sam deploy --guided
+   ```
+   SAM will prompt you for your API keys, phone numbers, and coordinates during the guided deploy.
+
+4. **Test it:**
+   ```bash
+   sam remote invoke UvAlertFunction --stack-name uv-index-alert
    ```
 
-4. **Run:**
-   ```bash
-   python uv_alert.py
-   ```
+## Run Locally
 
-## Schedule It
-
-Use cron to check every morning:
 ```bash
-# Run at 8 AM daily
-0 8 * * * cd /path/to/uv-index-alert && source .env && python uv_alert.py
+pip install -r requirements.txt
+# Set env vars (or source .env)
+python uv_alert.py
 ```
 
-## Environment Variables
+## Architecture
 
-| Variable | Description |
+- **AWS Lambda** — runs the check (Python 3.12, 128 MB, ~30s timeout)
+- **CloudWatch Events** — triggers the Lambda daily at 2pm UTC (adjust the cron in `template.yaml`)
+- **OpenUV API** — provides the UV index
+- **Twilio** — sends the SMS alert
+
+## Configuration
+
+All parameters are set during `sam deploy --guided` and stored as CloudFormation parameters:
+
+| Parameter | Description |
 |---|---|
-| `OPENUV_API_KEY` | Your OpenUV API key |
-| `LATITUDE` | Your latitude |
-| `LONGITUDE` | Your longitude |
-| `TWILIO_ACCOUNT_SID` | Twilio account SID |
-| `TWILIO_AUTH_TOKEN` | Twilio auth token |
-| `TWILIO_FROM_NUMBER` | Twilio phone number (sender) |
-| `TO_NUMBER` | Your phone number (receiver) |
-| `UV_THRESHOLD` | UV index threshold (default: 3) |
+| `OpenUvApiKey` | Your OpenUV API key |
+| `Latitude` | Your latitude |
+| `Longitude` | Your longitude |
+| `TwilioAccountSid` | Twilio account SID |
+| `TwilioAuthToken` | Twilio auth token |
+| `TwilioFromNumber` | Twilio phone number (sender) |
+| `ToNumber` | Your phone number (receiver) |
+| `UvThreshold` | UV index threshold (default: 3) |
+
+To change the schedule, edit the `Schedule` in `template.yaml` and redeploy.
