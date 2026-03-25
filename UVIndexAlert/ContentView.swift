@@ -11,17 +11,23 @@ struct ContentView: View {
                 }
                 .tag(0)
 
+            SunCalculatorView()
+                .tabItem {
+                    Label("Calculator", systemImage: "slider.horizontal.3")
+                }
+                .tag(1)
+
             UVMapView()
                 .tabItem {
                     Label("World Map", systemImage: "map.fill")
                 }
-                .tag(1)
+                .tag(2)
 
             LocationDetailView()
                 .tabItem {
                     Label("Details", systemImage: "info.circle.fill")
                 }
-                .tag(2)
+                .tag(3)
         }
     }
 }
