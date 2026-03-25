@@ -83,6 +83,10 @@ struct HomeView: View {
                 Text(uvDescription(for: uv))
                     .font(.title3)
                     .foregroundStyle(.secondary)
+
+                if uv > 0 {
+                    maxTimeCard(uv: uv)
+                }
             } else {
                 Text("--")
                     .font(.system(size: 64, weight: .bold, design: .rounded))
@@ -184,6 +188,76 @@ struct HomeView: View {
         case 6..<8: return "High — Sunscreen is a must"
         case 8..<11: return "Very High — Avoid the sun"
         default: return "Extreme — Stay inside"
+        }
+    }
+
+    private func maxTimeCard(uv: Double) -> some View {
+        let fairMax = maxSafeMinutes(uv: uv, skinFactor: 1.0)
+        let medMax = maxSafeMinutes(uv: uv, skinFactor: 1.7)
+
+        return VStack(spacing: 8) {
+            Divider().padding(.horizontal, 40)
+
+            HStack(spacing: 24) {
+                VStack(spacing: 2) {
+                    Text("🧑🏻")
+                    Text(formatMinutes(fairMax))
+                        .font(.system(.callout, design: .rounded, weight: .bold))
+                        .foregroundStyle(.orange)
+                    Text("fair skin")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+
+                VStack(spacing: 2) {
+                    Text("🧑🏽")
+                    Text(formatMinutes(medMax))
+                        .font(.system(.callout, design: .rounded, weight: .bold))
+                        .foregroundStyle(.orange)
+                    Text("medium skin")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+
+                VStack(spacing: 2) {
+                    Image(systemName: "cross.vial.fill")
+                        .foregroundStyle(.blue)
+                        .font(.callout)
+                    Text(quickSPF(uv: uv))
+                        .font(.system(.callout, design: .rounded, weight: .bold))
+                        .foregroundStyle(.blue)
+                    Text("rec. SPF")
+                        .font(.caption2)
+                        .foregroundStyle(.secondary)
+                }
+            }
+
+            if uv >= 3 {
+                Text("Reapply sunscreen every 2 hours")
+                    .font(.caption2)
+                    .foregroundStyle(.secondary)
+            }
+        }
+        .padding(.top, 4)
+    }
+
+    private func maxSafeMinutes(uv: Double, skinFactor: Double) -> Double {
+        guard uv > 0 else { return 999 }
+        return (67.0 * skinFactor / uv) * 0.6
+    }
+
+    private func formatMinutes(_ min: Double) -> String {
+        if min > 120 { return "2h+" }
+        if min < 5 { return "<5m" }
+        return String(format: "%.0fm", min)
+    }
+
+    private func quickSPF(uv: Double) -> String {
+        switch uv {
+        case ..<3: return "15"
+        case 3..<6: return "30"
+        case 6..<8: return "50"
+        default: return "50+"
         }
     }
 }
