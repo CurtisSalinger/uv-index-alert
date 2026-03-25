@@ -1,4 +1,5 @@
 import Foundation
+import WidgetKit
 
 class UVManager: ObservableObject {
     @Published var currentUV: Double?
@@ -27,6 +28,14 @@ class UVManager: ObservableObject {
         let response = try JSONDecoder().decode(OpenMeteoResponse.self, from: data)
         let uv = response.current.uv_index
         currentUV = uv
+
+        // Share with widget
+        if let defaults = AppConstants.sharedDefaults {
+            defaults.set(uv, forKey: AppConstants.uvIndexKey)
+            defaults.set(Date().timeIntervalSince1970, forKey: AppConstants.lastCheckedKey)
+        }
+        WidgetCenter.shared.reloadAllTimelines()
+
         return uv
     }
 }

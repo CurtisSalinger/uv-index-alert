@@ -1,5 +1,6 @@
 import CoreLocation
 import Combine
+import WidgetKit
 
 class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
     private let manager = CLLocationManager()
@@ -10,6 +11,15 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
         manager.delegate = self
         manager.desiredAccuracy = kCLLocationAccuracyKilometer
         manager.distanceFilter = 1000
+
+        // Load last known location from shared storage
+        if let defaults = AppConstants.sharedDefaults {
+            let lat = defaults.double(forKey: AppConstants.latitudeKey)
+            let lng = defaults.double(forKey: AppConstants.longitudeKey)
+            if lat != 0, lng != 0 {
+                lastLocation = CLLocation(latitude: lat, longitude: lng)
+            }
+        }
     }
 
     func requestPermission() {
@@ -19,6 +29,13 @@ class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         lastLocation = locations.last
+
+        // Share location with widget
+        if let location = locations.last, let defaults = AppConstants.sharedDefaults {
+            defaults.set(location.coordinate.latitude, forKey: AppConstants.latitudeKey)
+            defaults.set(location.coordinate.longitude, forKey: AppConstants.longitudeKey)
+            WidgetCenter.shared.reloadAllTimelines()
+        }
     }
 
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {

@@ -14,7 +14,38 @@
 		A10000010000000000000005 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000020000000000000005; };
 		A10000010000000000000006 /* UserSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000020000000000000006; };
 		A10000010000000000000007 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A10000020000000000000007; };
+		A10000010000000000000008 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002000000000000000A; };
+		A10000010000000000000009 /* AppIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002000000000000000C; };
+		B10000010000000000000001 /* UVIndexAlertWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000020000000000000001; };
+		B10000010000000000000002 /* UVIndexAlertWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B10000020000000000000002; };
+		B10000010000000000000003 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B10000020000000000000003; };
+		B10000010000000000000004 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000002000000000000000A; };
+		B10000010000000000000005 /* UVIndexAlertWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = B10000020000000000000005; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		B10000100000000000000001 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A10000080000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B10000050000000000000001;
+			remoteInfo = UVIndexAlertWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B10000120000000000000001 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				B10000010000000000000005 /* UVIndexAlertWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		A10000020000000000000001 /* UVIndexAlertApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UVIndexAlertApp.swift; sourceTree = "<group>"; };
@@ -26,10 +57,26 @@
 		A10000020000000000000007 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A10000020000000000000008 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A10000020000000000000009 /* UVIndexAlert.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UVIndexAlert.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A1000002000000000000000A /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
+		A1000002000000000000000B /* UVIndexAlert.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UVIndexAlert.entitlements; sourceTree = "<group>"; };
+		A1000002000000000000000C /* AppIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIconView.swift; sourceTree = "<group>"; };
+		B10000020000000000000001 /* UVIndexAlertWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UVIndexAlertWidget.swift; sourceTree = "<group>"; };
+		B10000020000000000000002 /* UVIndexAlertWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UVIndexAlertWidgetBundle.swift; sourceTree = "<group>"; };
+		B10000020000000000000003 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		B10000020000000000000004 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B10000020000000000000005 /* UVIndexAlertWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = UVIndexAlertWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		B10000020000000000000006 /* UVIndexAlertWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = UVIndexAlertWidgetExtension.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		A10000030000000000000001 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B10000030000000000000001 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -43,6 +90,8 @@
 			isa = PBXGroup;
 			children = (
 				A10000040000000000000002 /* UVIndexAlert */,
+				A10000040000000000000004 /* Shared */,
+				B10000040000000000000001 /* UVIndexAlertWidget */,
 				A10000040000000000000003 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -58,6 +107,8 @@
 				A10000020000000000000006 /* UserSettings.swift */,
 				A10000020000000000000007 /* Assets.xcassets */,
 				A10000020000000000000008 /* Info.plist */,
+				A1000002000000000000000B /* UVIndexAlert.entitlements */,
+				A1000002000000000000000C /* AppIconView.swift */,
 			);
 			path = UVIndexAlert;
 			sourceTree = "<group>";
@@ -66,8 +117,29 @@
 			isa = PBXGroup;
 			children = (
 				A10000020000000000000009 /* UVIndexAlert.app */,
+				B10000020000000000000005 /* UVIndexAlertWidgetExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A10000040000000000000004 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				A1000002000000000000000A /* AppConstants.swift */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		B10000040000000000000001 /* UVIndexAlertWidget */ = {
+			isa = PBXGroup;
+			children = (
+				B10000020000000000000001 /* UVIndexAlertWidget.swift */,
+				B10000020000000000000002 /* UVIndexAlertWidgetBundle.swift */,
+				B10000020000000000000003 /* Assets.xcassets */,
+				B10000020000000000000004 /* Info.plist */,
+				B10000020000000000000006 /* UVIndexAlertWidgetExtension.entitlements */,
+			);
+			path = UVIndexAlertWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -80,15 +152,34 @@
 				A10000060000000000000001 /* Sources */,
 				A10000030000000000000001 /* Frameworks */,
 				A10000060000000000000002 /* Resources */,
+				B10000120000000000000001 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				B10000110000000000000001 /* PBXTargetDependency */,
 			);
 			name = UVIndexAlert;
 			productName = UVIndexAlert;
 			productReference = A10000020000000000000009 /* UVIndexAlert.app */;
 			productType = "com.apple.product-type.application";
+		};
+		B10000050000000000000001 /* UVIndexAlertWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B10000070000000000000001 /* Build configuration list for PBXNativeTarget "UVIndexAlertWidgetExtension" */;
+			buildPhases = (
+				B10000060000000000000001 /* Sources */,
+				B10000030000000000000001 /* Frameworks */,
+				B10000060000000000000002 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UVIndexAlertWidgetExtension;
+			productName = UVIndexAlertWidgetExtension;
+			productReference = B10000020000000000000005 /* UVIndexAlertWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -114,6 +205,7 @@
 			projectRoot = "";
 			targets = (
 				A10000050000000000000001 /* UVIndexAlert */,
+				B10000050000000000000001 /* UVIndexAlertWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -124,6 +216,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				A10000010000000000000007 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B10000060000000000000002 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B10000010000000000000003 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -140,10 +240,30 @@
 				A10000010000000000000004 /* LocationManager.swift in Sources */,
 				A10000010000000000000005 /* NotificationManager.swift in Sources */,
 				A10000010000000000000006 /* UserSettings.swift in Sources */,
+				A10000010000000000000008 /* AppConstants.swift in Sources */,
+				A10000010000000000000009 /* AppIconView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B10000060000000000000001 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B10000010000000000000001 /* UVIndexAlertWidget.swift in Sources */,
+				B10000010000000000000002 /* UVIndexAlertWidgetBundle.swift in Sources */,
+				B10000010000000000000004 /* AppConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		B10000110000000000000001 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = B10000050000000000000001 /* UVIndexAlertWidgetExtension */;
+			targetProxy = B10000100000000000000001 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		A10000090000000000000001 /* Debug */ = {
@@ -201,6 +321,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = UVIndexAlert/UVIndexAlert.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -229,6 +350,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = UVIndexAlert/UVIndexAlert.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -252,6 +374,58 @@
 			};
 			name = Release;
 		};
+		B10000090000000000000001 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = UVIndexAlertWidget/UVIndexAlertWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = UVIndexAlertWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "UV Alert Widget";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uvindexalert.app.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B10000090000000000000002 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = UVIndexAlertWidget/UVIndexAlertWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = UVIndexAlertWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "UV Alert Widget";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.uvindexalert.app.widget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -269,6 +443,15 @@
 			buildConfigurations = (
 				A10000090000000000000003 /* Debug */,
 				A10000090000000000000004 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B10000070000000000000001 /* Build configuration list for PBXNativeTarget "UVIndexAlertWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B10000090000000000000001 /* Debug */,
+				B10000090000000000000002 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
