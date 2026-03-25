@@ -1,6 +1,34 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var selectedTab = 0
+
+    var body: some View {
+        TabView(selection: $selectedTab) {
+            HomeView()
+                .tabItem {
+                    Label("UV Index", systemImage: "sun.max.fill")
+                }
+                .tag(0)
+
+            UVMapView()
+                .tabItem {
+                    Label("World Map", systemImage: "map.fill")
+                }
+                .tag(1)
+
+            LocationDetailView()
+                .tabItem {
+                    Label("Details", systemImage: "info.circle.fill")
+                }
+                .tag(2)
+        }
+    }
+}
+
+// MARK: - Home View (original UV display)
+
+struct HomeView: View {
     @StateObject private var locationManager = LocationManager()
     @StateObject private var uvManager = UVManager()
     @StateObject private var settings = UserSettings.shared
