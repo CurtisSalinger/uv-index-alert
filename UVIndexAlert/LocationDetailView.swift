@@ -255,11 +255,14 @@ struct LocationDetailView: View {
             }
             if let cloudCover {
                 let cloudRisk: String
-                switch cloudCover {
-                case 0..<25: cloudRisk = "Minimal cloud protection"
-                case 25..<50: cloudRisk = "Some cloud filtering"
-                case 50..<75: cloudRisk = "Moderate cloud cover"
-                default: cloudRisk = "Heavy cloud cover"
+                if cloudCover < 25 {
+                    cloudRisk = "Minimal cloud protection"
+                } else if cloudCover < 50 {
+                    cloudRisk = "Some cloud filtering"
+                } else if cloudCover < 75 {
+                    cloudRisk = "Moderate cloud cover"
+                } else {
+                    cloudRisk = "Heavy cloud cover"
                 }
                 detailRow(icon: "cloud.sun.fill", label: "Cloud Effect", value: cloudRisk)
             }
